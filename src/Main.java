@@ -1,4 +1,5 @@
 import java.util.Vector;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
@@ -134,21 +135,21 @@ public class Main {
         sin paralelismo y con paralelismo.
         * */
 
-        Vector<Long> vector = GeneradorValores.generarAleatoriosVector(10000000);
-        AtomicLong promedio= new AtomicLong();
-        promedio.set(0);
+//        Vector<Long> vector = GeneradorValores.generarAleatoriosVector(10000000);
+//        AtomicLong promedio= new AtomicLong();
+//        promedio.set(0);
 
         {
-            Long endTime;
-            Long startTime = System.currentTimeMillis();
-            vector.stream().forEach(e -> promedio.set(promedio.longValue()+e));
-            endTime=System.currentTimeMillis();
-            System.out.println("Tardo en recorrer el vector sin paralelismo: " + (endTime-startTime) +" mili segundos");
-            System.out.println(promedio);
-            System.out.println(promedio.longValue()/vector.size());
+//            Long endTime;
+//            Long startTime = System.currentTimeMillis();
+//            vector.stream().forEach(e -> promedio.set(promedio.longValue()+e));
+//            endTime=System.currentTimeMillis();
+//            System.out.println("Tardo en recorrer el vector sin paralelismo: " + (endTime-startTime) +" mili segundos");
+//            System.out.println(promedio);
+//            System.out.println(promedio.longValue()/vector.size());
         }
         {
-            Long startTime;
+        /*    Long startTime;
             Long endTime;
             AtomicLong promedioParallel= new AtomicLong();
             promedioParallel.set(0);
@@ -160,9 +161,8 @@ public class Main {
             endTime=System.currentTimeMillis();
             System.out.println(resutaldo);
             System.out.println("Tardo en recorrer el vector con paralelismo: " + (endTime-startTime) +" mili segundos");
-
-//            System.out.println(promedioParallel);
-//            System.out.println(promedioParallel.get()/vector.size());
+            System.out.println(promedioParallel);
+            System.out.println(promedioParallel.get()/vector.size());*/
         }
 
 //        System.out.println(promedio.doubleValue()/vector.size());
@@ -180,6 +180,11 @@ public class Main {
         Concurrent Hash Map tardo 27900 en agregarse
         CopyOnWriteArrayList tardo 3765000 en agregarse
         * */
+
+
+
+
+
 
     }
 

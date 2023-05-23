@@ -2,6 +2,9 @@ public final class Persona {
     private String nombre;
     private String apellido;
 
+    private EstadoCivil.EnumEstadoCivil estadoCivil;
+
+
     public Persona(String nombre, String apellidd, EstadoCivil.EnumEstadoCivil estadoCivil) {
         this.nombre = nombre;
         this.apellido = apellidd;
@@ -32,7 +35,6 @@ public final class Persona {
         this.estadoCivil = estadoCivil;
     }
 
-    private EstadoCivil.EnumEstadoCivil estadoCivil;
 
     public Persona cambiarEstadoCivil(EstadoCivil.EnumEstadoCivil nuevoEstadoCivil) {
         return new Persona(nombre, apellido, nuevoEstadoCivil);
