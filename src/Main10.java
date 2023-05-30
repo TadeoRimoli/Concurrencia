@@ -7,39 +7,65 @@ public class Main10 {
 
     public static void main(String[] args) {
         int maxThreads=4;
+        int maxStreams=8;
         int currentThreads=-1;
-        Thread []hilos = new Thread[maxThreads];
+        ThreadStream []hilos = new ThreadStream[maxThreads];
         Boolean []condiciones = new Boolean[maxThreads];
         Arrays.fill(condiciones, false);
 
         List<Stream> streams= new ArrayList<Stream>();
-        for(int i=0;i<8;i++){
+        for(int i=0;i<maxStreams;i++){
             streams.add(new Stream(i,3));
         }
-
-
-        String comando="";
-        Scanner scanner = new Scanner(System.in);
-
-        while(!comando.equalsIgnoreCase("exit")){
-            System.out.println("entro.");
-
-            comando=scanner.nextLine();
-            if(currentThreads==maxThreads){
-                System.out.println("No se puede conectar al stream ya que no hay mas hilos disponibles.");
-            }else{
-                currentThreads++;
-                if(comando.equalsIgnoreCase("stream-1")){
-                    condiciones[currentThreads]=true;
-                    hilos[currentThreads]= new ThreadStream(streams.get(1),condiciones[currentThreads]);
-                    hilos[currentThreads].start();
-                }
-            }
-
+        for(int i=0;i<maxThreads;i++){
+            hilos[i]= new ThreadStream(null,condiciones[i]);
         }
 
-        if(currentThreads>=0){
-            System.out.println("ENTRO IF");
+        String comando="";
+        int streamSeleccionado;
+        Scanner scanner = new Scanner(System.in);
+        comando=scanner.nextLine();
+        while(!comando.equalsIgnoreCase("exit")){
+
+            //si hay lugar
+            int aux=0;
+            boolean flag=false;
+            while(aux<maxThreads && hilos[aux].getStream()!=null){
+                    aux++;
+            }
+
+
+
+            streamSeleccionado=Integer.valueOf(String.valueOf(comando.charAt(comando.length()-1)));
+            System.out.println("streamSeleccionado "+streamSeleccionado);
+
+            if(comando.substring(0,comando.length()-1).equalsIgnoreCase("stop-")){
+                for(int i=0;i<maxThreads;i++){
+                    if(hilos[i].getStream()!=null && hilos[i].getStream().getId()==streamSeleccionado){
+                        hilos[i].setCondicion(false);
+                        hilos[i].setStream(null);
+                    }
+                }
+                System.out.println("Deteniendo stream "+streamSeleccionado);
+            }
+            else if(aux==maxThreads){
+                System.out.println("No hay hilos disponibles");
+            }
+            else if(streamSeleccionado < maxStreams && comando.substring(0,comando.length()-1).equalsIgnoreCase("stream-")
+                    && streams.get(streamSeleccionado).getMaxUsers() >= streams.get(streamSeleccionado).getCurrentUsers()+1){
+                streams.get(streamSeleccionado).setCurrentUsers(streams.get(streamSeleccionado).getCurrentUsers()+1);
+                System.out.print("Se agrego el stream " + streamSeleccionado + " al hilo " + aux + "\n");
+                hilos[aux].setStream(streams.get(streamSeleccionado));
+                hilos[aux].setCondicion(true);
+                hilos[aux].start();
+            }
+
+            comando=scanner.nextLine();
+        }
+
+        for(int i=0;i<maxThreads;i++){
+            hilos[i].setCondicion(false);
+            hilos[i].setStream(null);
         }
 
     }
