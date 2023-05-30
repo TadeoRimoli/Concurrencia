@@ -1,6 +1,6 @@
 import java.util.concurrent.Semaphore;
 
-public class Main2 {
+public class Main6 {
     private static final int CAPACIDAD_MAXIMA = 100;
     private static Semaphore semaforo = new Semaphore(CAPACIDAD_MAXIMA);
 

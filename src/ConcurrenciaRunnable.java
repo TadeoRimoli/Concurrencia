@@ -3,12 +3,12 @@ import java.util.Date;
 
 public class ConcurrenciaRunnable implements Runnable {
 
-    ConcurrenciaRunnable(int delay,int k,int n){
+    ConcurrenciaRunnable(int delay,int k,long n){
         this.delayMillis=delay;
         this.k=k;
         this.n=n;
     }
-    int delayMillis;int k; int n;
+    int delayMillis;int k; long n;
     public void test(){
         int sum = 0;
 
